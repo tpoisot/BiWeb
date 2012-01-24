@@ -24,6 +24,7 @@ classdef LPBrim < handle
         blue_labels          = 0;
         trials               = 10;
         Qb                   = 0;
+        Qr                   = 0;
         N                    = 0;
     end
     
@@ -59,6 +60,8 @@ classdef LPBrim < handle
             obj.BRIM();
             
             obj.CleanCommunities();
+            
+            obj.CalculateQrValue();
             
         end
             
@@ -195,6 +198,28 @@ classdef LPBrim < handle
             
             q = trace(obj.rr' * obj.bb * obj.tt) / obj.n_edges;
             
+        end
+        
+        function obj = CalculateQrValue(obj)
+           
+            obj.Qr = 0;
+            
+            for i = 1:obj.N
+                row_index = find(obj.rr(:,i));
+                col_index = find(obj.tt(:,i));
+                nr = length(row_index);
+                nc = length(col_index);
+                
+                for j = 1:nr
+                    for k = 1:nc
+                        if(obj.matrix(j,k) > 0)
+                            obj.Qr = obj.Qr + 1;
+                        end
+                    end
+                end
+            end
+            
+            obj.Qr = obj.Qr / obj.n_edges;
         end
         
         function obj = AssignRedNodes(obj)

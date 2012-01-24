@@ -14,10 +14,10 @@ nodf = w.nestedness.nodf;
 nodf_up = w.nestedness.nodf_up;
 nodf_low = w.nestedness.nodf_low;
 
-fprintf('Values of Nestedness using NODF algorithm:');
-fprintf('\tNODF:                 \t%f', nodf);
-fprintf('\tNODF in rows:         \t%f', nod_up);
-fprintf('\tNODF in columns:      \t%f', nod_low);
+fprintf('\nValues of Nestedness using NODF algorithm:\n');
+fprintf('\tNODF:                 \t%f\n', nodf);
+fprintf('\tNODF in rows:         \t%f\n', nodf_up);
+fprintf('\tNODF in columns:      \t%f\n', nodf_low);
 
 %Accesing the values of modularity using LP&BRIM algorithm
 
@@ -25,7 +25,9 @@ N = w.modules.N;
 Qb = w.nestedness.nodf_up;
 Qr = w.nestedness.nodf_low;
 
-fprintf('Values of Modularity using LP&BRIM algorithm:');
-fprintf('\tNumber of modules:    \t%f', N);
-fprintf('\tBipartite modularity: \t%f', Qb);
-fprintf('\tRealized modularity:  \t%f', Qr);
+fprintf('\nValues of Modularity using LP&BRIM algorithm:\n');
+fprintf('\tNumber of modules:    \t%f\n', N);
+fprintf('\tBipartite modularity: \t%f\n', Qb);
+fprintf('\tRealized modularity:  \t%f\n', Qr);
+
+fprintf('\n');

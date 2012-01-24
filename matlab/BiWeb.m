@@ -50,27 +50,6 @@ classdef BiWeb
         end
         
     end
-    
-    methods %Modularity
-        
-        function CalculateModularity(obj)
-
-            obj.Modularity = ModularityBRIMBarberVersion(obj);
-            obj.Modularity.CalculateModularity();
-            obj.ModulCalculated = 1;
-            
-        end
-        
-        function CalculateBRIMandLP(obj)
-           
-            obj.Modularity = ModularityLPandBRIM(obj);
-            obj.Modularity.CalculateModularity();
-            obj.ModulCalculated = 1;
-
-        end
-        
-    end
-    
-    
+       
 end
 

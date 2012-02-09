@@ -9,8 +9,8 @@ The details of the implementations vary across languages, but the  two version p
 
 ## Authors
 
-This project is a collaboration between [Weitz's research group](http://ecotheory.biology.gatech.edu) and Gravel's lab group (http://chaire-eec.uqar.qc.ca/dom-fr.php). The maintenance of the code is
+This project is a collaboration between [Weitz's research group](http://ecotheory.biology.gatech.edu) and [Gravel's research group](http://chaire-eec.uqar.qc.ca/dom-fr.php). The maintenance of the code is
 done by:
 
-* `biweb-py`: Timothée Poisot
-* `biweb-ml`: César Flores
+* `biweb-py`: [Timothée Poisot](http://timotheepoisot.fr/)
+* `biweb-ml`: [César Flores](mailto:cesar.flores@gatech.edu)

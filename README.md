@@ -9,7 +9,7 @@ The details of the implementations vary across languages, but the  two version p
 
 ### Authors
 
-This project is a collaboration between [Weitz's research group](http://ecotheory.biology.gatech.edu) and [Gravel's research group](http://chaire-eec.uqar.qc.ca/dom-fr.php). If you detect a bug or simply would like to give us feedback, please contact to:
+This project is a collaboration between members of [Weitz research group](http://ecotheory.biology.gatech.edu) and [Gravel research group](http://chaire-eec.uqar.qc.ca/dom-fr.php). If you detect a bug or simply would like to give us feedback, please contact:
 
 * `biweb-py`: [Timothée Poisot](http://timotheepoisot.fr/)
 * `biweb-ml`: [César Flores](mailto:cesar.flores@gatech.edu)

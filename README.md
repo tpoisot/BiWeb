@@ -7,7 +7,7 @@ BiWeb is a framwork designed facilitate the analysis of bipartite (two-mode) eco
 
 The details of the implementations vary across languages, but the  two version provide the same set of core features, with a very similar syntax.
 
-## Authors
+### Authors
 
 This project is a collaboration between [Weitz's research group](http://ecotheory.biology.gatech.edu) and [Gravel's research group](http://chaire-eec.uqar.qc.ca/dom-fr.php). The maintenance of the code is
 done by:

@@ -13,3 +13,5 @@ This project is a collaboration between members of the [Weitz research group](ht
 
 * `biweb-py`: [Timothée Poisot](http://timotheepoisot.fr/)
 * `biweb-ml`: [César Flores](mailto:cesar.flores@gatech.edu)
+
+This project received contributions of Sergi Valverde, Joshua S Weitz & Philippe Desjardins-Proulx

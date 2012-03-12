@@ -15,15 +15,15 @@ classdef NODF < handle
         index_rows  = [];
         index_cols  = [];
         nodf        = [];
-        nodf_up     = [];
-        nodf_low    = [];
+        nodf_rows   = [];
+        nodf_cols   = [];
     end
     
     %CONSTRUCTOR AND MAIN PROCEDURE ALGORITHM
     methods
 
         function obj = NODF(bipmatrix)
-            obj.matrix = bipmatrix; %Normalize the matrix
+            obj.matrix = bipmatrix>0; %Normalize the matrix
             [obj.n_rows obj.n_cols] = size(bipmatrix);  %Number of Rows
             obj.index_rows = 1:obj.n_rows;
             obj.index_cols = 1:obj.n_cols;
@@ -35,13 +35,15 @@ classdef NODF < handle
            
             m = obj.n_rows;
             n = obj.n_cols;
-            denom = n*(n-1)/2 + m*(m-1)/2;
+            dm = m*(m-1)/2;
+            dn = n*(n-1)/2;
+            denom = dm + dn;
             
             obj.SortMatrix();
             obj.CalculateNpaired();
-            obj.nodf = obj.nodf / (100*denom);
-            obj.nodf_up = obj.nodf_up / (100*denom);
-            obj.nodf_low = obj.nodf_low / (100*denom);
+            obj.nodf = obj.nodf / (denom);
+            obj.nodf_rows = obj.nodf_rows / (dm);
+            obj.nodf_cols = obj.nodf_cols / (dn);
                
         end
     end
@@ -54,13 +56,13 @@ classdef NODF < handle
             sumcols = sum(obj.matrix,1);
             
             obj.nodf = 0;
-            obj.nodf_up = 0;
-            obj.nodf_low = 0;
+            obj.nodf_rows = 0;
+            obj.nodf_cols = 0;
             %Fill for rows
             for i = 1:obj.n_rows
-                for j = i+1:obj.n_cols
+                for j = i+1:obj.n_rows
                     if( sumrows(j) < sumrows(i) && sumrows(j) > 0 )
-                        obj.nodf_up = obj.nodf_up + 100*sum(obj.matrix(i, obj.matrix(j,:)==1))/sumrows(j);
+                        obj.nodf_rows = obj.nodf_rows + 100*sum(obj.matrix(i, obj.matrix(j,:)==1))/sumrows(j);
                     end
                 end
             end
@@ -69,12 +71,12 @@ classdef NODF < handle
             for k = 1:obj.n_cols
                 for l = k+1:obj.n_cols
                     if( sumcols(l) < sumcols(k) && sumcols(l) > 0 )
-                        obj.nodf_low = obj.nodf_low + 100*sum(obj.matrix(obj.matrix(:,l)==1,k))/sumcols(l);
+                        obj.nodf_cols = obj.nodf_cols + 100*sum(obj.matrix(obj.matrix(:,l)==1,k))/sumcols(l);
                     end
                 end
             end
             
-            obj.nodf = obj.nodf_low + obj.nodf_up;
+            obj.nodf = obj.nodf_cols + obj.nodf_rows;
         end
         
         function obj = SortMatrix(obj)

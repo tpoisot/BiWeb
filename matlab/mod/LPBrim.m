@@ -26,6 +26,8 @@ classdef LPBrim < handle
         Qb                   = 0;
         Qr                   = 0;
         N                    = 0;
+        row_modules          = [];
+        col_modules          = [];
     end
     
     %CONSTRUCTOR AND MAIN PROCEDURES ALGORITHM
@@ -62,6 +64,14 @@ classdef LPBrim < handle
             obj.CleanCommunities();
             
             obj.CalculateQrValue();
+            
+            [a b] = ind2sub(size(obj.rr), find(obj.rr));
+            [val sortv] = sort(a);
+            obj.row_modules = b(sortv);
+            
+            [a b] = ind2sub(size(obj.tt), find(obj.tt));
+            [val sortv] = sort(a);
+            obj.col_modules = b(sortv);
             
         end
             
@@ -110,7 +120,9 @@ classdef LPBrim < handle
                         uniq = uniq(rperm);
                         count = arrayfun(@(x) sum(x==labels), uniq);
                         [maxv index] = max(count);
-                        obj.blue_labels(i) = uniq(index);
+                        if(~isempty(uniq(index)))
+                            obj.blue_labels(i) = uniq(index);
+                        end
                     end
 
                     uniq = unique(obj.blue_labels);
@@ -128,7 +140,9 @@ classdef LPBrim < handle
                         uniq = uniq(rperm);
                         count = arrayfun(@(x) sum(x==labels), uniq);
                         [maxv index] = max(count);
-                        obj.red_labels(i) = uniq(index);
+                        if(~isempty(uniq(index)))
+                            obj.red_labels(i) = uniq(index);
+                        end
                     end
 
                     uniq = unique(obj.red_labels);
@@ -212,7 +226,7 @@ classdef LPBrim < handle
                 
                 for j = 1:nr
                     for k = 1:nc
-                        if(obj.matrix(j,k) > 0)
+                        if(obj.matrix(row_index(j),col_index(k)) > 0)
                             obj.Qr = obj.Qr + 1;
                         end
                     end

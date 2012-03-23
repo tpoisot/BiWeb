@@ -1,0 +1,18 @@
+Metadata-Version: 1.0
+Name: biweb
+Version: 1.0.0
+Summary: A Python module to work on bipartite networksof ecological interactions.
+Home-page: http://tpoisot.github.com/biweb/
+Author: Timothee Poisot
+Author-email: timothee.poisot@uqar.ca
+License: GNU GPL
+Description: UNKNOWN
+Keywords: ecology bipartite networks bioinformatics
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Intended Audience :: Science/Research
+Classifier: Environment :: Console
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: Topic :: Scientific/Engineering :: Visualization

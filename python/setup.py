@@ -14,7 +14,7 @@ setup(
     license = "GNU GPL",
     keywords = "ecology bipartite networks bioinformatics",
     url = "http://tpoisot.github.com/biweb/",
-    packages=['python','python.base','python.dataIO','python.null','python.nes','python.mod','python.graphs','python.tests','python.spe'],
+    packages=['biweb','biweb.base','biweb.dataIO','biweb.null','biweb.nes','biweb.mod','biweb.graphs','biweb.tests','biweb.spe'],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Topic :: Utilities",

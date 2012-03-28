@@ -43,14 +43,8 @@ class bipartite:
         self.nodf_low = NODF[1]
         # Placeholder for modularity
         self.modules = modules(self)
-        # Placeholder for contributions
-        self.contrib = contrib(self)
         # Placeholder for tests
         self.tests = test(self)
-        # Placeholder for extinctions
-        self.robustness = robustness(self)
-        # Placeholder for references
-        self.ref = []
         # Placeholder for species names
         self.upnames = range(self.upsp)
         self.lonames = range(self.losp)
@@ -140,15 +134,6 @@ class bipartite:
         if self.modules.done:
             header += '\tmN\tmQb\tmQr'
             info += '\t'+str(self.modules.N)+'\t'+str(self.modules.Q)+'\t'+str(self.modules.Qr)
-        if self.robustness.gtos.score > 0:
-            header += '\tRgtos'
-            info += '\t'+str(self.robustness.gtos.score)
-        if self.robustness.stog.score > 0:
-            header += '\tRstog'
-            info += '\t'+str(self.robustness.stog.score)
-        if self.robustness.random.score > 0:
-            header += '\tRrand'
-            info += '\t'+str(self.robustness.random.score)
         if len(self.tests.devnest) > 0:
             header += '\tnodf_sim\tnodf_pval\tnodf_icLow\tnodf_icUp'
             info += "\t"+str(round(self.tests.devnest[2],2))+"\t"+str(self.tests.devnest[1])+"\t"+str(round(self.tests.devnest[3],2))+"\t"+str(round(self.tests.devnest[4],2))
@@ -183,9 +168,6 @@ class bipartite:
         if toFile:
             f = open(self.name+'-sp.txt','w')
         Header = 'sp\tlev\tdeg\tspe\tssi\trr'
-        if self.contrib.done:
-            Header+= '\t'
-            Header+= 'CN_w\tCN_u\tCN_l'
         if self.modules.done:
             Header+= '\t'
             Header+= 'MOD'
@@ -200,11 +182,6 @@ class bipartite:
             SpInfo+= str(self.specificity[tls])+'\t'
             SpInfo+= str(self.ssi[tls])+'\t'
             SpInfo+= str(self.rr[tls])
-            if self.contrib.done:
-                SpInfo+= '\t'
-                SpInfo+= str(self.contrib.up_whole[tls])+'\t'
-                SpInfo+= str(self.contrib.up_up[tls])+'\t'
-                SpInfo+= str(self.contrib.up_low[tls])
             if self.modules.done:
                 SpInfo+= '\t'
                 SpInfo+= str(self.modules.up_modules[tls])
@@ -219,11 +196,6 @@ class bipartite:
             SpInfo+= '-----'+'\t'
             SpInfo+= '-----'+'\t'
             SpInfo+= '-----'
-            if self.contrib.done:
-                SpInfo+= '\t'
-                SpInfo+= str(self.contrib.low_whole[lls])+'\t'
-                SpInfo+= str(self.contrib.low_up[lls])+'\t'
-                SpInfo+= str(self.contrib.low_low[lls])
             if self.modules.done:
                 SpInfo+= '\t'
                 SpInfo+= str(self.modules.low_modules[lls])
@@ -304,29 +276,3 @@ def sortbymodule(W,g,h):
     Fweb.upnames = vTnames
     Fweb.lonames = vBnames
     return Fweb
-
-class ref:
-    ## This class defines references for a dataset
-    ## Fallback order is
-    ##		1 DOI
-    ##		2 PMID
-    ##		3 JSTOR stable url
-    def __init__ (self,infos):
-        self.link = ''
-        self.fulltext = 'Unable to retrieve citation info'
-        if infos.has_key('doi'):
-            self.doi = infos['doi']
-            self.link_doi = "http://dx.doi.org/"+str(self.doi)
-            self.fulltext = text_citation(get_citation(self.doi))
-            self.link = self.link_doi
-        if infos.has_key('pmid'):
-            self.pmid = infos['pmid']
-            self.link_pubmed = "http://www.ncbi.nlm.nih.gov/pubmed/"+str(self.pmid)
-            self.fulltext = text_citation(get_citation(self.pmid))
-            self.link = self.link_pubmed
-        if infos.has_key('jstor'):
-            self.jstor = infos['jstor']
-            self.link_jstor = "http://www.jstor.org/pss/"+str(self.jstor)
-            self.link = self.link_jstor
-        if self.link == '':
-            self.link = ' (no link available)'

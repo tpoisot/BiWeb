@@ -17,12 +17,18 @@ classdef NODF < handle
         nodf        = [];
         nodf_rows   = [];
         nodf_cols   = [];
+        nodf_strict = 1;
     end
     
     %CONSTRUCTOR AND MAIN PROCEDURE ALGORITHM
     methods
 
-        function obj = NODF(bipmatrix)
+        function obj = NODF(bipmatrix,dec_filling_strict)
+            if(nargin == 1)
+                obj.nodf_strict = 1;
+            else
+                obj.nodf_strict = dec_filling_strict;
+            end
             obj.matrix = bipmatrix>0; %Normalize the matrix
             [obj.n_rows obj.n_cols] = size(bipmatrix);  %Number of Rows
             obj.index_rows = 1:obj.n_rows;
@@ -61,8 +67,14 @@ classdef NODF < handle
             %Fill for rows
             for i = 1:obj.n_rows
                 for j = i+1:obj.n_rows
-                    if( sumrows(j) < sumrows(i) && sumrows(j) > 0 )
-                        obj.nodf_rows = obj.nodf_rows + 100*sum(obj.matrix(i, obj.matrix(j,:)==1))/sumrows(j);
+                    if(obj.nodf_strict)
+                        if(sumrows(j) < sumrows(i) && sumrows(j) > 0 )
+                            obj.nodf_rows = obj.nodf_rows + 100*sum(obj.matrix(i, obj.matrix(j,:)==1))/sumrows(j);
+                        end
+                    else
+                        if(sumrows(j) <= sumrows(i) && sumrows(j) > 0 )
+                            obj.nodf_rows = obj.nodf_rows + 100*sum(obj.matrix(i, obj.matrix(j,:)==1))/sumrows(j);
+                        end
                     end
                 end
             end
@@ -70,8 +82,14 @@ classdef NODF < handle
             %Fill for columns
             for k = 1:obj.n_cols
                 for l = k+1:obj.n_cols
-                    if( sumcols(l) < sumcols(k) && sumcols(l) > 0 )
-                        obj.nodf_cols = obj.nodf_cols + 100*sum(obj.matrix(obj.matrix(:,l)==1,k))/sumcols(l);
+                    if(obj.nodf_strict)
+                        if( sumcols(l) < sumcols(k) && sumcols(l) > 0 )
+                            obj.nodf_cols = obj.nodf_cols + 100*sum(obj.matrix(obj.matrix(:,l)==1,k))/sumcols(l);
+                        end
+                    else
+                        if( sumcols(l) <= sumcols(k) && sumcols(l) > 0 )
+                            obj.nodf_cols = obj.nodf_cols + 100*sum(obj.matrix(obj.matrix(:,l)==1,k))/sumcols(l);
+                        end
                     end
                 end
             end

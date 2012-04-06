@@ -28,6 +28,7 @@ classdef LPBrim < handle
         N                    = 0;
         row_modules          = [];
         col_modules          = [];
+        done                 = 0;
     end
     
     %CONSTRUCTOR AND MAIN PROCEDURES ALGORITHM
@@ -50,13 +51,15 @@ classdef LPBrim < handle
                 obj.bb = obj.matrix - (1/obj.n_edges) * rowdeg * coldeg;
             end
             
-            obj.CalculateModularity();
-            
         end
         
         
-        function obj = CalculateModularity(obj)
+        function obj = Detect(obj, ntrials)
            
+            if(nargin == 2)
+                obj.trials = ntrials;
+            end
+            
             obj.LP();
             
             obj.BRIM();
@@ -72,6 +75,8 @@ classdef LPBrim < handle
             [a b] = ind2sub(size(obj.tt), find(obj.tt));
             [val sortv] = sort(a);
             obj.col_modules = b(sortv);
+            
+            obj.done = 1;
             
         end
             
@@ -237,22 +242,41 @@ classdef LPBrim < handle
         end
         
         function obj = AssignRedNodes(obj)
-            rr = obj.bb*obj.tt;
-            [maxx,maxi]=max(rr');
-            tmps=size(rr);
-            obj.rr=zeros(obj.n_rows,tmps(2));
-            idx=sub2ind(size(obj.rr),1:obj.n_rows,maxi);
-            obj.rr(idx)=1;
+            
+            try
+%                 rr = obj.bb*obj.tt;
+%                 [maxx,maxi]=max(rr');
+%                 tmps=size(rr);
+%                 obj.rr=zeros(obj.n_rows,tmps(2));
+%                 idx=sub2ind(size(obj.rr),1:obj.n_rows,maxi);
+%                 obj.rr(idx)=1;
+                
+                [maxval, maxind] = max(obj.bb*obj.tt, [], 2);
+                modules = eye(size(obj.tt,2));
+                obj.rr = modules(maxind, :);
+            catch
+                display('FATAL ERROR');
+            end
+            
         end
         
         function obj = AssignBlueNodes(obj)
             
-            rr = obj.bb'*obj.rr;
-            [maxx,maxi]=max(rr');
-            tmps=size(rr);
-            obj.tt=zeros(obj.n_cols,tmps(2));
-            idx=sub2ind(size(obj.tt),1:obj.n_cols,maxi);
-            obj.tt(idx)=1;
+            try
+%                 rr = obj.bb'*obj.rr;
+%                 [maxx,maxi]=max(rr');
+%                 tmps=size(rr);
+%                 obj.tt=zeros(obj.n_cols,tmps(2));
+%                 idx=sub2ind(size(obj.tt),1:obj.n_cols,maxi);
+%                 obj.tt(idx)=1;
+                
+                [maxval, maxind] = max(obj.bb'*obj.rr, [], 2);
+                modules = eye(size(obj.rr,2));
+                obj.tt = modules(maxind, :);
+            catch
+                display('FATAL ERROR');
+            end
+            
         end
         
         

@@ -53,6 +53,40 @@ classdef SpeFunc
             
         end
         
+        function [R,I] = IR(webmatrix)
+           
+            n_rows = size(webmatrix,1);
+            %Correlation matrix of responses
+            rho = corrcoef(webmatrix');
+            %Standard deviations of responses
+            sig = std(webmatrix',1);
+            %Correction factor
+            cfac = n_rows*(n_rows-1);
+            %Measures
+            tR = 0;
+            tI = 0;
+            for i = 1:n_rows-1
+                for j = i+1:n_rows
+                    tR = tR + (sig(i)-sig(j))^2;
+                    tI = tI + sig(i)*sig(j)*(1-rho(i,j));
+                end
+            end
+
+            R = tR / (2 * cfac);
+            I = tI / cfac;
+            
+            VarW = std(webmatrix(:),1)*std(webmatrix(:),1);
+
+            if (VarW == 0)
+                R = 0;
+                I = 0;
+            else
+                R = R/VarW;
+                I = I/VarW;
+            end
+            
+        end
+        
     end
-    
+
 end

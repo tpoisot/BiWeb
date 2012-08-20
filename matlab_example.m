@@ -3,7 +3,7 @@ g = genpath('matlab/');
 addpath(g);
 
 % Create an object of the class BiWeb. By just creating it,
-% modularity and nestedness will be calculated;
+% nestedness will be calculated;
 w = Reading.CREATE_FROM_MATRIX_WITH_LABELS('sampledata/rodents.web');
 
 %Accesing the values of nestedness
